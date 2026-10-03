@@ -2,6 +2,7 @@
 import argparse
 
 from src import init_dataset, preprocessing, transformation, split_data
+from src.oversampling import jalankan_eksperimen_oversampling
 from src.utils import quiet
 
 
@@ -83,6 +84,8 @@ def main(stage: str = "all") -> None:
             "\nBaseline selesai: "
             "X_train, X_test, y_train, y_test siap dipakai."
         )
+
+        jalankan_eksperimen_oversampling()
 
 
 if __name__ == "__main__":
