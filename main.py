@@ -1,8 +1,7 @@
 import argparse
 
-# 1. TAMBAHKAN 'undersampling' PADA BARIS IMPORT INI
-from src import init_dataset, preprocessing, transformation, split_data, undersampling
-from src.oversampling import jalankan_eksperimen_oversampling
+from src import init_dataset, preprocessing, transformation, split_data, naive_bayes
+from src.svm_model import run_svm
 from src.utils import quiet
 
 
@@ -77,23 +76,29 @@ def main(stage: str = "all") -> None:
     )
 
     # =========================================================
-    # SELESAI
+    # EKSEKUSI MODEL & EKSPERIMEN
     # =========================================================
     if stage == "all":
         print(
             "\nBaseline selesai: "
-            "X_train, X_test, y_train, y_test siap dipakai."
+            "X_train, X_test, y_train, y_test siap dipakai.\n"
         )
         
-        jalankan_eksperimen_oversampling()
+        # 1. Jalankan eksperimen Naive Bayes 
+        print("=== Menjalankan Eksperimen Naive Bayes ===")
+        if hasattr(naive_bayes, "run"):
+            naive_bayes.run()
+        elif hasattr(naive_bayes, "run_naive_bayes"):
+            naive_bayes.run_naive_bayes()
         
-
-        undersampling.run()
+        # 2. Jalankan eksperimen SVM 
+        print("\n=== Menjalankan Eksperimen SVM ===")
+        run_svm()
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Pipeline baseline UTS ML Soal C - Kelompok 3."
+        description="Pipeline Klasifikasi Predictive Maintenance."
     )
 
     parser.add_argument(
